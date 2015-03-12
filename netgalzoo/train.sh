@@ -8,8 +8,10 @@
 # ROUND 2
 # 20k iters, [60k to 80k], base_lr: 0.0001
 # accuracy = 0.446729, loss = 1.58194
-#caffe train --solver=solver.prototxt --weights=netgalzoo_iter_60000_lr0p001.caffemodel
+#caffe train --solver=solver.prototxt --weights=netgalzoo_lr0p001_iter_60000.caffemodel
 
 # ROUND 3
-# 20k iters, [80k to 100k], base_lr: 0.00001
-caffe train --solver=solver.prototxt --weights=netgalzoo_iter_20000_lr0p0001.caffemodel
+# 10k iters, [80k to 90k], base_lr: 0.00001
+# accuracy = 0.448187, loss = 1.59942
+# didn't help much, actually slightly worse.
+#caffe train --solver=solver.prototxt --weights=netgalzoo_lr0p0001_iter_20000.caffemodel
