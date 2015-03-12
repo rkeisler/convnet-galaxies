@@ -10,7 +10,7 @@ layers {
     batch_size: 64
   }
   transform_param {
-    crop_size: 88
+    crop_size: 86
     mean_file: "../data/train_mean_image"
     mirror: true
   }
@@ -27,7 +27,7 @@ layers {
     batch_size: 64
   }
   transform_param {
-    crop_size: 88
+    crop_size: 86
     mean_file: "../data/train_mean_image"
     mirror: true
   }
@@ -44,11 +44,11 @@ layers {
   weight_decay: 0
   convolution_param {
     num_output: 32
+    pad: 6
     kernel_size: 3
-    stride: 2
+    stride: 1
     weight_filler {
-      type: "gaussian"
-      std: 0.01
+      type: "xavier"
     }
     bias_filler {
       type: "constant"
@@ -95,16 +95,16 @@ layers {
   weight_decay: 0
   convolution_param {
     num_output: 64
-    pad: 2
+    pad: 1
     kernel_size: 3
+    stride: 1
     group: 2
     weight_filler {
-      type: "gaussian"
-      std: 0.01
+      type: "xavier"
     }
     bias_filler {
       type: "constant"
-      value: 1
+      value: 0
     }
   }
 }
@@ -149,9 +149,9 @@ layers {
     num_output: 128
     pad: 1
     kernel_size: 3
+    stride: 1
     weight_filler {
-      type: "gaussian"
-      std: 0.01
+      type: "xavier"
     }
     bias_filler {
       type: "constant"
@@ -179,6 +179,7 @@ layers {
   }
 }
 
+
 layers {
   name: "fc4"
   type: INNER_PRODUCT
@@ -189,19 +190,18 @@ layers {
   weight_decay: 1
   weight_decay: 0
   inner_product_param {
-    num_output: 512
+    num_output: 500
     weight_filler {
-      type: "gaussian"
-      std: 0.005
+      type: "xavier"
     }
     bias_filler {
       type: "constant"
-      value: 1
+      value: 0
     }
   }
 }
 layers {
-  name: "relu6"
+  name: "relu4"
   type: RELU
   bottom: "fc4"
   top: "fc4"
@@ -215,6 +215,9 @@ layers {
     dropout_ratio: 0.5
   }
 }
+
+
+
 layers {
   name: "fc5"
   type: INNER_PRODUCT
@@ -225,21 +228,57 @@ layers {
   weight_decay: 1
   weight_decay: 0
   inner_product_param {
-    num_output: 20
+    num_output: 500
     weight_filler {
-      type: "gaussian"
-      std: 0.005
+      type: "xavier"
     }
     bias_filler {
       type: "constant"
-      value: 1
+      value: 0
+    }
+  }
+}
+layers {
+  name: "relu5"
+  type: RELU
+  bottom: "fc5"
+  top: "fc5"
+}
+layers {
+  name: "drop5"
+  type: DROPOUT
+  bottom: "fc5"
+  top: "fc5"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+
+
+layers {
+  name: "fc6"
+  type: INNER_PRODUCT
+  bottom: "fc5"
+  top: "fc6"
+  blobs_lr: 1
+  blobs_lr: 2
+  weight_decay: 1
+  weight_decay: 0
+  inner_product_param {
+    num_output: 20
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
     }
   }
 }
 layers {
   name: "accuracy"
   type: ACCURACY
-  bottom: "fc5"
+  bottom: "fc6"
   bottom: "label"
   top: "accuracy"
   include: { phase: TEST }
@@ -247,7 +286,7 @@ layers {
 layers {
   name: "loss"
   type: SOFTMAX_LOSS
-  bottom: "fc5"
+  bottom: "fc6"
   bottom: "label"
   top: "loss"
 }
