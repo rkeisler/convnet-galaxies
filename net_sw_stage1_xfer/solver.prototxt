@@ -10,5 +10,5 @@ max_iter: 450000
 momentum: 0.9
 weight_decay: 0.0005
 snapshot: 5000
-snapshot_prefix: "net_sw_stage1_xfer_F"
+snapshot_prefix: "net_sw_stage1_xfer_G"
 solver_mode: GPU
