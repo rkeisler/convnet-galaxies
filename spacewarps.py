@@ -1,6 +1,7 @@
 import numpy as np
 import ipdb
 
+
 def make_stage1_train_and_val_listfiles(frac_val=0.2):
     #from glob import glob
     #filenames = glob('data/cutouts_good/*.png')
@@ -33,3 +34,15 @@ def load_labels():
     df = read_csv('data/cluster_catalog.csv') #, index_col='cutoutname')
     return df
 
+
+def make_jpg_copies():
+    pass
+    '''
+    from scipy.misc import imread, imsave
+    from glob import glob
+    filenames = glob('data/cutouts_good/*.png')
+    for filename in filenames:
+        x = imread(filename)
+        savename = filename.split('.png')[0] + '.jpg'
+        imsave(x, savename)
+    '''
