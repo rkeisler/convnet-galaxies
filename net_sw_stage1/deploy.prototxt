@@ -246,18 +246,3 @@ layers {
     }
   }
 }
-layers {
-  name: "accuracy"
-  type: ACCURACY
-  bottom: "fc6"
-  bottom: "label"
-  top: "accuracy"
-  include: { phase: TEST }
-}
-layers {
-  name: "loss"
-  type: SOFTMAX_LOSS
-  bottom: "fc6"
-  bottom: "label"
-  top: "loss"
-}
