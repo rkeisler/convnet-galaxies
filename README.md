@@ -1,6 +1,6 @@
 # Overview
 
-This repo contains code for studying images of galaxies with convolutional neural networks.  We use [caffe](caffe.berkeleyvision.org) for all of the training and prediction.
+This repo contains code for studying images of galaxies with convolutional neural networks.  We use [caffe](caffe.berkeleyvision.org) for all of the training and prediction.  I used a [terminal.com snap](https://www.terminal.com/snapshot/4c3277602398f199c39133d2dcc9a0cb61a5547e31f3f46d5cb3055108214cf0) to do the training (careful - $1 per hour!).
 
 
 ## the different convnets
