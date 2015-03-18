@@ -1,11 +1,24 @@
-# convnet-galaxies
-code for studying images of galaxies with convolutional neural networks
+# Overview
 
-## Get the galzoo data.
+This repo contains code for studying images of galaxies with convolutional neural networks.  We use [caffe](caffe.berkeleyvision.org) for all of the training and prediction.
 
-Download training images (``images_training_rev1.zip``) and labels (``training_solutions_rev1.zip``) from [here](https://www.kaggle.com/c/galaxy-zoo-the-galaxy-challenge/data) (must be logged in to kaggle).  Put them into ``data/`` and unzip them.
 
-## notes on SpaceWarps data
+## To Do
+ - Generate ROC curves.
+ - Fine-tune the best Stage 1 net on Stage 2.
+
+## the different convnets
+
+All of these nets share the same architecture (3 conv layers + 2 fully-connected layers + 1 fully-connected output layer), except that the dimension of the last FC layer changes between the GalaxyZoo and SpaceWarps datasets.   The nets are trained using [caffe](caffe.berkeleyvision.org).
+
+ - `net_sw_stage1` - I trained a net from scratch using only the SpaceWarps stage 1 data provided by Chris/Phil.  The details of training are in `net_sw_stage1/train.sh`.  I get accuracy = 0.975 (loss = 0.132) on the validation set.
+
+ - `net_sw_stage1_xfer` - Same as above, but instead of training from scratch I fine-tuned a net that had already been trained on the GalaxyZoo morphology data (see more below).  The details of training are in `net_sw_stage1_xfer/train.sh`.  I get accuracy = 0.971 (loss = 0.070) on the validation set.
+
+ - `netgalzoo` - I trained a net from scratch on the GalaxyZoo morphology data.  The training and test data are from the related [kaggle competition](https://www.kaggle.com/c/galaxy-zoo-the-galaxy-challenge/data).  Because of some annoying feature of the `caffe` data layer, I formulated this as a classification problem rather than the original regression problem in the kaggle competition.  Specifically, I used kmeans to define 20 morphology types, and tried to classify into those 20 types.
+
+
+## some notes on SpaceWarps data
 
 I'm a bit confused about the labels.
 
@@ -59,9 +72,3 @@ So the majority (~90%) of these are data and we literally don't know if they are
 Of the remaining ~10% Stage 2 where we know what they are, 
   (1129 + 596) = 1725 = 92% are not images of lenses.
   151 = 8% are images of lenses.
-
-### Plan
-I will train a net from scratch on Stage 1.
-Then I will fine-tune that net on Stage 2.
-
-Then I may go back and try this again, where I start with a net trained on GalaxyZoo morphology data.
