@@ -3,10 +3,6 @@
 This repo contains code for studying images of galaxies with convolutional neural networks.  We use [caffe](caffe.berkeleyvision.org) for all of the training and prediction.
 
 
-## To Do
- - Generate ROC curves.
- - Fine-tune the best Stage 1 net on Stage 2.
-
 ## the different convnets
 
 All of these nets share the same architecture (3 conv layers + 2 fully-connected layers + 1 fully-connected output layer), except that the dimension of the last FC layer changes between the GalaxyZoo and SpaceWarps datasets.   The nets are trained using [caffe](caffe.berkeleyvision.org).
@@ -16,6 +12,11 @@ All of these nets share the same architecture (3 conv layers + 2 fully-connected
  - `net_sw_stage1_xfer` - Same as above, but instead of training from scratch I fine-tuned a net that had already been trained on the GalaxyZoo morphology data (see more below).  The details of training are in `net_sw_stage1_xfer/train.sh`.  I get accuracy = 0.971 (loss = 0.070) on the validation set.
 
  - `netgalzoo` - I trained a net from scratch on the GalaxyZoo morphology data.  The training and test data are from the related [kaggle competition](https://www.kaggle.com/c/galaxy-zoo-the-galaxy-challenge/data).  Because of some annoying feature of the `caffe` data layer, I formulated this as a classification problem rather than the original regression problem in the kaggle competition.  Specifically, I used kmeans to define 20 morphology types, and tried to classify into those 20 types.
+
+
+## To Do
+ - Generate ROC curves.
+ - Fine-tune the best Stage 1 net on Stage 2.
 
 
 ## some notes on SpaceWarps data
